@@ -25,8 +25,8 @@ const Dashboard: React.FC = () => {
 
       {/* Menú */}
       <div className="menu">
-        <button onClick={() => navigate('/')}>Inicio</button>
-        <button onClick={() => navigate('/bodega')}>Bodega</button>
+        <button onClick={() => navigate('/Inicio')}>Inicio</button>
+        <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
         <button onClick={() => navigate('/ordenes-compra')}>Órdenes de Compra</button>
         <button onClick={() => navigate('/vendedores')}>Vendedores</button>
         <button onClick={() => navigate('/productos')}>Productos</button>
