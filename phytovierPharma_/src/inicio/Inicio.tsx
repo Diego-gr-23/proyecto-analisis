@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
     <div>
       {/* Header */}
       <div className="header">
-        <div className="logo">LOGO</div>
+        <div className="logo">Phytovier Pharma</div>
         <div>
           <span>Administrador</span>
           <button onClick={handleLogout}>Salir</button>

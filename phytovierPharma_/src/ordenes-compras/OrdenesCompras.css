@@ -74,3 +74,124 @@ body {
 .menu button:hover {
     background-color: #388E3C;
 }
+/* OrdenesCompras.css */
+
+.ordenes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    background-color: #e2f1c2;
+  }
+  
+  .ordenes-list {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .orden-button {
+    background-color: #b5e37a;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .orden-button.highlighted {
+    background-color: #75bc3d;
+    color: white;
+  }
+  
+  .ver-mas {
+    margin-top: 10px;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .ordenes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    flex: 1;
+    max-width: 600px;
+  }
+  
+  .orden-card {
+    width: 150px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid #ccc;
+  }
+  
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+  }
+  
+  .vendedores-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 180px;
+    padding: 10px;
+    background-color: #d9edb3;
+  }
+  
+  .vendedores-list {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .vendedores-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .vendedor {
+    padding: 5px;
+    background-color: #b5e37a;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .vendedor.highlighted {
+    background-color: #75bc3d;
+    color: white;
+  }
+  
+  .scroll-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .scroll-up,
+  .scroll-down {
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .scroll-thumb {
+    width: 20px;
+    height: 60px;
+    background-color: #75bc3d;
+    margin: 5px 0;
+  }
+  
+  .footer {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #d9edb3;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 14px;
+  }
+  

@@ -74,3 +74,102 @@ body {
 .menu button:hover {
     background-color: #388E3C;
 }
+
+.productos-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #d7f3b4;
+    font-family: sans-serif;
+  }
+  
+  .panel {
+    width: 30%;
+    background-color: #e7f8cb;
+    border: 2px solid #a0bc7c;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  
+  .panel-title {
+    background-color: #5f9f32;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 0 0 15px 0;
+  }
+  
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  input {
+    padding: 5px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+  }
+  
+  .imagen-vendedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .image-placeholder {
+    width: 100px;
+    height: 80px;
+    background-color: #f5f5f5;
+    border: 1px dashed #999;
+    margin-bottom: 5px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .cancelar {
+    background-color: #dcecd4;
+    color: #333;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .agregar {
+    background-color: #5f9f32;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .eliminar {
+    background-color: #4f8a29;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .scrollable-productos {
+    max-height: 550px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+  
+  .vendedor-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
