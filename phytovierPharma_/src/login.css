@@ -1,9 +1,3 @@
-body{
-  font-family: Arial, sans-serif;
-  height: 100vh;
-  background-color: #81c784;
-  margin: 0;
-}
 body.login {
   font-family: Arial, sans-serif;
   display: flex;
@@ -11,8 +5,23 @@ body.login {
   align-items: center;
   height: 100vh;
   background-color: #81c784;
-  margin: 0;
 }
+
+body{
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  background-color: #81c784;
+  /* margin: ; */
+}
+/* body.login {
+  font-family: Arial, sans-serif;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #81c784;
+  /* margin: 0; */
+/* } */ */
 
 .login-container {
   background: #4CAF50;
@@ -21,7 +30,7 @@ body.login {
   box-shadow: 0 0 10px rgb(255, 255, 255);
   width: 500px;
   justify-content: center;
-
+  display: flex;
 }
 
 h2 {
