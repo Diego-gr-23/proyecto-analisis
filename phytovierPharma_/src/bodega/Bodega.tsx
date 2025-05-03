@@ -37,50 +37,54 @@ const Dashboard: React.FC = () => {
             </div>
 
             {/*Box left*/}
-            <div className="columna izquierda">
-                <div className="lista-productos">
+            <div className="main-content">
+                <div className="columna izquierda">
+                    <div className="lista-productos">
+                        <div className="item">Producto 1</div>
+                        <div className="item">Producto 2</div>
+                        <div className="item">Producto 3</div>
+                        <div className="item">Producto 4</div>
+                        <div className="item">Producto 5</div>
+                        <div className="item">Producto 6</div>
+                        <div className="item">Producto 7</div>
+                        <div className="item">Producto 8</div>
+                        <div className="item">Producto 9</div>
+                        <div className="item">Producto 10</div>
+                        <div className="item">Producto 11</div>
+                        <div className="item">Producto 12</div>
+                        <div className="item">Producto 13</div>
+                        <div className="item">Producto 14</div>
+                        <div className="item ver-mas">ver mas...</div>
+                    </div>
+                </div>
+
+                {/*contenedor central*/}
+                <div className="columna centro">
+                    <div className="visor-productor">
+                        <img src={medicinaImg} alt="Imagen del producto" className="imagen-producto" />
+                    </div>
+                    <textarea className="reporte" placeholder="Aca puede escribir un reporte del producto"></textarea>
+                </div>
+
+
+                {/*Box right*/}
+                <div className="columna derecha">
+                    <div className="encabezado-derecha">Lista de Productos a dar de baja</div>
                     <div className="item">Producto 1</div>
                     <div className="item">Producto 2</div>
                     <div className="item">Producto 3</div>
                     <div className="item">Producto 4</div>
                     <div className="item">Producto 5</div>
-                    <div className="item">Producto 6</div>
-                    <div className="item">Producto 7</div>
-                    <div className="item">Producto 8</div>
-                    <div className="item">Producto 9</div>
-                    <div className="item">Producto 10</div>
-                    <div className="item">Producto 11</div>
-                    <div className="item">Producto 12</div>
-                    <div className="item">Producto 13</div>
-                    <div className="item">Producto 14</div>
-                    <div className="item ver-mas">ver mas...</div>
+
+                    <div className="botones">
+                        <button className="cancelar">Cancelar</button>
+                        <button className="eliminar">Eliminar</button>
+                    </div>
                 </div>
+
+
             </div>
-
-            {/*contenedor central*/}
-            <div className="columna centro">
-                <div className="visor-productor">
-                    <img src={medicinaImg} alt="Imagen del producto" className="imagen-producto" />
-                </div>
-                <textarea className="reporte" placeholder="Aca puede escribir un reporte del producto"></textarea>
-            </div>
-
-
-            {/*Box right*/}
-            <div className="columna derecha">
-                <div className="encabezado-derecha">Lista de Productos a dar de baja</div>
-                <div className="item">Producto 1</div>
-                <div className="item">Producto 2</div>
-                <div className="item">Producto 3</div>
-                <div className="item">Producto 4</div>
-                <div className="item">Producto 5</div>
-
-                <div className="botones">
-                    <button className="cancelar">Cancelar</button>
-                    <button className="eliminar">Eliminar</button>
-                </div>
-            </div>
-
+            
 
 
         </div>
