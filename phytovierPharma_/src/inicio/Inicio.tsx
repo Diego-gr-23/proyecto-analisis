@@ -29,7 +29,6 @@ const Dashboard: React.FC = () => {
         <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
         <button onClick={() => navigate('/ordenes-compra')}>Órdenes de Compra</button>
         <button onClick={() => navigate('/vendedores')}>Vendedores</button>
-        <button onClick={() => navigate('/productos')}>Productos</button>
         <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
         <button onClick={() => navigate('/configuracion')}>Configuración</button>
       </div>
