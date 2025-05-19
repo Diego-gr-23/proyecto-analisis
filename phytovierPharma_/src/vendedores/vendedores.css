@@ -18,7 +18,14 @@ body {
     color: white;
     box-shadow: 0 px 4 px 6 px rgba(0, 0, 0, 0.1);
 }
+.logo-image {
+    width:100%;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 
+}
 .logo {
     font-size: 24px;
     font-weight: bold;

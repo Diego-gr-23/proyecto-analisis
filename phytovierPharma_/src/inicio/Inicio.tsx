@@ -2,6 +2,7 @@
 import React from 'react'
 import './Inicio.css'
 import { useNavigate } from 'react-router-dom'
+import pharmaImg from '../assets/pharma.png'
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate()
@@ -15,7 +16,9 @@ const Dashboard: React.FC = () => {
     <div>
       {/* Header */}
       <div className="header">
-        <div className="logo">Phytovier Pharma</div>
+        <div className="logo">
+          <img src={pharmaImg} alt="Logo" className="logo-image" />
+        </div>
         <div>
           <span>Administrador</span>
           <button onClick={handleLogout}>Salir</button>
