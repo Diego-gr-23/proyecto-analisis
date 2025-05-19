@@ -1,22 +1,31 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
-@Schema({ collection: 'Medicine' }) // Nombre EXACTO de tu colección
+@Schema()
 export class Medicine extends Document {
-    @Prop({ type: Types.ObjectId })
-    declare _id: Types.ObjectId; // Coincide con el ObjectId de MongoDB
-
   @Prop({ required: true })
   name: string;
 
   @Prop()
-  type?: string; // El signo ? indica que es opcional (como en tus documentos)
+  type: string;
 
   @Prop({ required: true })
   price: number;
 
   @Prop()
-  provider?: string; // No todos tus documentos lo tienen
+  provider: string;
+
+  @Prop()
+  descripcion: string;
+
+  @Prop()
+  expiryDate: string;
+
+  @Prop()
+  brand: string;
+
+  @Prop()
+  laboratory: string;
 }
 
 export const MedicineSchema = SchemaFactory.createForClass(Medicine);

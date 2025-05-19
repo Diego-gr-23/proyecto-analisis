@@ -1,5 +1,5 @@
 import React from "react";
-import "./Vendedores.css";
+import "./vendedores.css";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
