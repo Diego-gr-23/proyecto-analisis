@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Bodega.css";
 import { useNavigate } from "react-router-dom";
 import medicinaImg from '../assets/medicina.jpeg';
+import pharmaImg from '../assets/pharma.png';
 
 interface Medicine {
     _id: string;
@@ -232,7 +233,9 @@ const Bodega: React.FC = () => {
     return ( 
         <div className="bodega-container">
             <div className="header">
-                <div className="logo">Phytovier Pharma</div>
+                <div className="logo">
+                    <img src={pharmaImg} alt="Logo" className="logo-image" />
+                </div>
                 <div className="header-actions">
                     <span>Administrador</span>
                     <button onClick={handleLogout}>Salir</button>
