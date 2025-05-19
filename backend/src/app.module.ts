@@ -5,6 +5,7 @@ import { HealthController } from './health/health.controller';
 import { MedicineModule } from './medicine/medicine.module';
 import { ValidationPipe } from '@nestjs/common';
 import { MedicineModule as MedicieModule } from './medicine/medicine.module';
+import { VendedoresModule } from './vendedores/vendedores.module';
 
 
 // app.module.ts
@@ -24,6 +25,7 @@ import { MedicineModule as MedicieModule } from './medicine/medicine.module';
     }),
     MedicineModule,
     MedicieModule,
+    VendedoresModule,
   ],
   controllers: [HealthController],
   providers: [],

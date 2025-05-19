@@ -60,19 +60,6 @@ const Dashboard: React.FC = () => {
           </form>
         </div>
 
-        {/* Sección Editar */}
-        <div className="panel">
-          <h2 className="panel-title">EDITAR VENDEDORES</h2>
-          <div className="scrollable-vendedores">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="vendedor-edit">
-                <div className="image-placeholder" />
-                <p>VENDEDOR {i}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Sección Eliminar */}
         <div className="panel">
           <h2 className="panel-title">ELIMINAR VENDEDOR</h2>
