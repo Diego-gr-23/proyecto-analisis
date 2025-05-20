@@ -259,7 +259,7 @@ const Bodega: React.FC = () => {
 
             <div className="bodega-content">
                 <div className="columna izquierda">
-                    <h2>Lista de Medicamentos ({medicines.length})</h2>
+                    <h2>LISTA DE MEDICAMENTOS ({medicines.length})</h2>
                     <div className="lista-medicamentos">
                         {loading ? (
                             <div className="loading">Cargando medicamentos...</div>
@@ -325,7 +325,7 @@ const Bodega: React.FC = () => {
 
                 <div className="columna derecha">
                     <div className="delete-section">
-                        <h3>Medicamentos para dar de baja ({medicinesToDelete.length})</h3>
+                        <h3>MEDICAMENTOS PARA DAR DE BAJA ({medicinesToDelete.length})</h3>
                         {medicinesToDelete.length === 0 ? (
                             <p>No hay medicamentos marcados para eliminar</p>
                         ) : (
