@@ -62,9 +62,6 @@ const Configuracion: React.FC = () => {
           <button type="submit">Guardar</button>
         </form>
 
-        <h3>Permisos de Acceso</h3>
-        <p>Configurar permisos por tipo de usuario (admin, vendedor, visitador médico)</p>
-        <p style={{ fontSize: '0.9rem', fontStyle: 'italic' }}>[Este módulo sería editable por el administrador en un sistema real]</p>
 
         <h3>Notificaciones</h3>
         <label>
@@ -85,11 +82,6 @@ const Configuracion: React.FC = () => {
           <option value="es">Español</option>
           <option value="en">Inglés</option>
         </select>
-
-        <h3>Datos de la Empresa</h3>
-        <input type="text" value={empresa.nombre} onChange={(e) => setEmpresa({ ...empresa, nombre: e.target.value })} placeholder="Nombre de la empresa" />
-        <input type="text" value={empresa.direccion} onChange={(e) => setEmpresa({ ...empresa, direccion: e.target.value })} placeholder="Dirección" />
-        <input type="text" value={empresa.logo} onChange={(e) => setEmpresa({ ...empresa, logo: e.target.value })} placeholder="URL del logo" />
 
         <h3>Parámetros del Sistema</h3>
         <label>

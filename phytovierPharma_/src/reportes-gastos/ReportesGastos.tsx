@@ -6,14 +6,24 @@ import pharmaImg from "../assets/pharma.png";
 const ReportesGastos: React.FC = () => {
     const navigate = useNavigate();
     const [tipoGasto, setTipoGasto] = useState("Todos");
+    const [mostrarReportesVendedor, setMostrarReportesVendedor] = useState(false);
+    const [vendedorSeleccionado, setVendedorSeleccionado] = useState("Vendedor 1");
 
     const handleLogout = () => {
         navigate('/');
     };
 
-    const handleTipoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTipoGasto(event.target.value);
+    const handleMostrarReportes = () => {
+        setMostrarReportesVendedor(true);
     };
+
+    const handleVendedorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setVendedorSeleccionado(event.target.value);
+    };
+
+    const datosGrafica = vendedorSeleccionado === "Vendedor 1"
+        ? ["20%", "40%", "60%", "65%", "80%", "95%"]
+        : ["10%", "30%", "50%", "55%", "70%", "85%"];
 
     return (
         <div>
@@ -43,12 +53,13 @@ const ReportesGastos: React.FC = () => {
             <div className="gastos-container">
                 {/* Gráfica simulada */}
                 <div className="grafica">
-                    <div className="barra roja" style={{ height: "60%" }}></div>
-                    <div className="barra gris" style={{ height: "70%" }}></div>
-                    <div className="barra roja" style={{ height: "50%" }}></div>
-                    <div className="barra gris" style={{ height: "55%" }}></div>
-                    <div className="barra roja" style={{ height: "90%" }}></div>
-                    <div className="barra gris" style={{ height: "75%" }}></div>
+                    {datosGrafica.map((altura, index) => (
+                        <div
+                            key={index}
+                            className={`barra ${index % 2 === 0 ? "roja" : "gris"}`}
+                            style={{ height: altura }}
+                        ></div>
+                    ))}
                 </div>
 
                 {/* Filtros */}
@@ -66,54 +77,37 @@ const ReportesGastos: React.FC = () => {
                         </div>
                         <div>
                             <label>Usuarios</label>
-                            <select>
-                                <option>Usuarios</option>
+                            <select onChange={handleVendedorChange} value={vendedorSeleccionado}>
+                                <option>Vendedor 1</option>
+                                <option>Vendedor 2</option>
                             </select>
                         </div>
                     </div>
 
                     <div className="tipo-gastos">
                         <label>Tipo de gastos</label>
-                        <div className="radios">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="tipo"
-                                    value="Todos"
-                                    checked={tipoGasto === "Todos"}
-                                    onChange={handleTipoChange}
-                                />
-                                Todos
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="tipo"
-                                    value="Gastos Fijos"
-                                    onChange={handleTipoChange}
-                                />
-                                Gastos Fijos
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="tipo"
-                                    value="Gastos Variables"
-                                    onChange={handleTipoChange}
-                                />
-                                Gastos Variables
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="tipo"
-                                    value="Compra de Productos"
-                                    onChange={handleTipoChange}
-                                />
-                                Compra de Productos
-                            </label>
-                        </div>
+                        {/* Puedes agregar aquí un input si es necesario */}
                     </div>
+
+                    <button onClick={handleMostrarReportes} className="btn-reportes-vendedor">
+                        Reportes del vendedor seleccionado en la parte Usuarios
+                    </button>
+
+                    {mostrarReportesVendedor && (
+                        <div className="reportes-vendedor">
+                            <h3>Reportes del {vendedorSeleccionado}</h3>
+                            <p>El vendedor Juan Perez de 30 medicamentos que se le dieron en una semana vendio 21 medicamentos <br/>
+                            Lista de medicamentos vendidos por el vendedor <br/>
+                            1. MeniPhib - 5 unidades - Q 100.00 <br/>
+                            2. Argipoten - 3 unidades  - Q 105.00<br/>
+                            3. Ajo Perejil - 2 unidades - Q 50.00<br/>
+                            4. Metabolex fibra - 5 unidades - Q 100<br/>
+                            5. Cartilageno - 3 unidades - Q 25.00<br/>
+                            Siendo un total de 21 medicamentos vendidos y un total de Q 1490. 00</p>
+                            Le hiceron falta 9 medicamentos para llegar a la meta de 30 medicamentos vendidos
+                            {/* Puedes insertar aquí una tabla o componente de reportes reales */}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

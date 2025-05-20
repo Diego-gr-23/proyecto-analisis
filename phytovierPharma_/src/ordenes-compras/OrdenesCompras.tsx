@@ -57,22 +57,11 @@ const Dashboard: React.FC = () => {
         </section>
 
         <aside className="vendedores-panel">
-          <div className="scroll-bar">
-            <div className="scroll-up">▲</div>
-            <div className="scroll-thumb" />
-            <div className="scroll-down">▼</div>
-          </div>
           <div className="vendedores-list">
             <div className="vendedores-title">Vendedores</div>
             <div className="vendedor highlighted">Vendedor 1</div>
-            <div className="vendedor">Vendedor 2</div>
-            <div className="vendedor">Vendedor 3</div>
           </div>
         </aside>
-
-        <footer className="footer">
-          Reporte de las órdenes del vendedor
-        </footer>
       </div>
     </div>
   );
