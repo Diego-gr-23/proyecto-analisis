@@ -1,28 +1,4 @@
-import { IsString, IsNumber, IsOptional, Min } from "class-validator";
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateVendedoreDto } from './create-vendedore.dto';
 
-export class UpdateVendedoreDto {
-    @IsString()
-    @IsOptional()
-    nombre: string;
-    
-    @IsString()
-    @IsOptional()
-    apellido: string;
-    
-    @IsNumber()
-    @IsOptional()
-    celular: number;
-    
-    @IsNumber()
-    @IsOptional()
-    dpi: number;
-    
-    @IsString()
-    @IsOptional()
-    direccion: string;
-    
-    @IsOptional()
-    @IsString()
-    imagen?: string;
-    
-}
+export class UpdateVendedoreDto extends PartialType(CreateVendedoreDto) {}

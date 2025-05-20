@@ -1,24 +1,21 @@
-import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+
+export type VendedoresDocument = HydratedDocument<Vendedores>;
 
 @Schema()
-export class Vendedores extends Document {
+export class Vendedores {
   @Prop({ required: true })
   nombre: string;
 
   @Prop({ required: true })
-  apellido: string;
+  numeroCelular: number;
 
-  @Prop({ required: true })
-  celular: number;
-
-  @Prop({ required: true })
-  dpi: number;
-
-  @Prop({ required: true })
-  direccion: string;
+  @Prop({ required: true, unique: true })
+  dpi: string;
 
   @Prop()
-  imagen: string;
+  descripcion: string;
 }
+
 export const VendedoresSchema = SchemaFactory.createForClass(Vendedores);

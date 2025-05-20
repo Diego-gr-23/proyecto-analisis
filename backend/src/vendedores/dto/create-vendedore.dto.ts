@@ -1,23 +1,19 @@
-import { IsString, IsNumber, IsOptional, Min } from "class-validator";
+import { IsNotEmpty, IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateVendedoreDto {
-    @IsString()
-    nombre: string;
-    
-    @IsString()
-    apellido: string;
-    
-    @IsNumber()
-    celular: number;
-    
-    @IsNumber()
-    dpi: number;
-    
-    @IsString()
-    direccion: string;
-    
-    @IsOptional()
-    @IsString()
-    imagen?: string;
-    
+  @IsNotEmpty()
+  @IsString()
+  nombre: string;
+  
+  @IsNotEmpty()
+  @IsNumber()
+  numeroCelular: number;
+  
+  @IsNotEmpty()
+  @IsString()
+  dpi: string;
+  
+  @IsOptional()
+  @IsString()
+  descripcion?: string;
 }

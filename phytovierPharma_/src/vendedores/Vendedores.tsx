@@ -4,50 +4,40 @@ import { useNavigate } from "react-router-dom";
 import medicinaImg from '../assets/medicina.jpeg';
 import pharmaImg from "../assets/pharma.png";
 
-interface Medicine {
-    _id: string;
-    name: string;
-    type?: string;
-    price: number;
-    provider?: string;
+interface Vendedor {
+    _id?: string;
+    nombre: string;
+    numeroCelular: number;
+    dpi: string;
     descripcion?: string;
 }
 
-interface NewProduct {
-    name: string;
-    expiryDate: string;
-    price: number;
-    type?: string;
-    provider?: string;
-}
-
-const vendedores: React.FC = () => {
+const Vendedores: React.FC = () => {
     const navigate = useNavigate();
-    const [medicines, setMedicines] = useState<Medicine[]>([]);
-    const [medicinesToDelete, setMedicinesToDelete] = useState<Medicine[]>([]);
-    const [selectedMedicine, setSelectedMedicine] = useState<Medicine | null>(null);
-    const [report, setReport] = useState("");
+    const [vendedores, setVendedores] = useState<Vendedor[]>([]);
+    const [vendedoresToDelete, setVendedoresToDelete] = useState<Vendedor[]>([]);
+    const [selectedVendedor, setSelectedVendedor] = useState<Vendedor | null>(null);
+    const [descripcion, setDescripcion] = useState("");
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
-    const [displayCount, setDisplayCount] = useState(14); // Número inicial de medicamentos a mostrar
+    const [displayCount, setDisplayCount] = useState(14); // Número inicial de vendedores a mostrar
     
-    // Estados para el formulario de nuevo producto
-    const [newProduct, setNewProduct] = useState<NewProduct>({
-        name: "",
-        expiryDate: "",
-        price: 0,
-        type: "",
-        provider: ""
+    // Estados para el formulario de nuevo vendedor
+    const [newVendedor, setNewVendedor] = useState<Vendedor>({
+        nombre: "",
+        numeroCelular: 0,
+        dpi: ""
     });
-    const [addingProduct, setAddingProduct] = useState(false);
+    const [addingVendedor, setAddingVendedor] = useState(false);
 
     useEffect(() => {
-        const fetchMedicines = async () => {
+        const fetchVendedores = async () => {
             try {
                 setLoading(true);
+                // Note: Updating to use the proper 'vendedores' endpoint
                 const url = searchTerm 
-                    ? `http://localhost:3000/medicine/search?name=${searchTerm}`
-                    : 'http://localhost:3000/medicine';
+                    ? `http://localhost:3000/vendedores?dpi=${searchTerm}`
+                    : 'http://localhost:3000/vendedores';
 
                 const response = await fetch(url);
                 
@@ -57,100 +47,99 @@ const vendedores: React.FC = () => {
                 
                 const result = await response.json();
                 
-                // Aquí está la corrección: Manejar correctamente la estructura de la respuesta
-                const medicinesData = result.data || result;
+                // Handle response structure
+                const vendedoresData = result.data || result;
                 
-                console.log("Datos recibidos:", medicinesData); // Log para debug
+                console.log("Datos recibidos:", vendedoresData); // Log para debug
                 
-                setMedicines(Array.isArray(medicinesData) ? medicinesData : []);
+                setVendedores(Array.isArray(vendedoresData) ? vendedoresData : []);
                 
             } catch (error) {
-                console.error("Error al cargar medicamentos:", error);
-                setMedicines([]); // Asegura que medicines sea un array vacío en caso de error
+                console.error("Error al cargar vendedores:", error);
+                setVendedores([]); // Asegura que vendedores sea un array vacío en caso de error
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchMedicines();
+        fetchVendedores();
     }, [searchTerm]);
 
     const handleLogout = () => {
         navigate('/');
     };
 
-    const handleSelectMedicine = (medicine: Medicine) => {
-        setSelectedMedicine(medicine);
-        setReport(medicine.descripcion || "");
+    const handleSelectVendedor = (vendedor: Vendedor) => {
+        setSelectedVendedor(vendedor);
+        setDescripcion(vendedor.descripcion || "");
     };
 
-    const handleMarkForDeletion = (medicine: Medicine) => {
-        if (!medicinesToDelete.some(m => m._id === medicine._id)) {
-            setMedicinesToDelete([...medicinesToDelete, medicine]);
+    const handleMarkForDeletion = (vendedor: Vendedor) => {
+        if (!vendedoresToDelete.some(v => v.dpi === vendedor.dpi)) {
+            setVendedoresToDelete([...vendedoresToDelete, vendedor]);
         }
     };
 
     const handleDeleteMarked = async () => {
         try {
             await Promise.all(
-                medicinesToDelete.map(medicine => 
-                    fetch(`http://localhost:3000/medicine/${medicine._id}`, {
+                vendedoresToDelete.map(vendedor => 
+                    fetch(`http://localhost:3000/vendedores/${vendedor.dpi}`, {
                         method: 'DELETE'
                     })
                 )
             );
 
             // Actualizar la lista después de eliminar
-            const updatedMedicines = medicines.filter(m => !medicinesToDelete.some(md => md._id === m._id));
-            setMedicines(updatedMedicines);
-            setMedicinesToDelete([]);
+            const updatedVendedores = vendedores.filter(v => !vendedoresToDelete.some(vd => vd.dpi === v.dpi));
+            setVendedores(updatedVendedores);
+            setVendedoresToDelete([]);
             
-            if (selectedMedicine && medicinesToDelete.some(m => m._id === selectedMedicine._id)) {
-                setSelectedMedicine(null);
+            if (selectedVendedor && vendedoresToDelete.some(v => v.dpi === selectedVendedor.dpi)) {
+                setSelectedVendedor(null);
             }
             
-            alert('Medicamentos eliminados con éxito');
+            alert('Vendedores eliminados con éxito');
         } catch (error) {
-            console.error("Error al eliminar medicamentos:", error);
-            alert('Error al eliminar medicamentos');
+            console.error("Error al eliminar vendedores:", error);
+            alert('Error al eliminar vendedores');
         }
     };
 
-    const handleSaveReport = async () => {
-        if (!selectedMedicine) return;
+    const handleSaveDescripcion = async () => {
+        if (!selectedVendedor) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/medicine/${selectedMedicine._id}`, {
+            const response = await fetch(`http://localhost:3000/vendedores/${selectedVendedor.dpi}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ descripcion: report }),
+                body: JSON.stringify({ descripcion: descripcion }),
             });
             
             if (!response.ok) {
-                throw new Error('Error al guardar el reporte');
+                throw new Error('Error al guardar la descripción');
             }
             
-            // Actualizar el medicamento en la lista local
-            const updatedMedicines = medicines.map(m => 
-                m._id === selectedMedicine._id ? { ...m, descripcion: report } : m
+            // Actualizar el vendedor en la lista local
+            const updatedVendedores = vendedores.map(v => 
+                v.dpi === selectedVendedor.dpi ? { ...v, descripcion: descripcion } : v
             );
             
-            setMedicines(updatedMedicines);
-            alert('Reporte guardado con éxito');
+            setVendedores(updatedVendedores);
+            alert('Descripción guardada con éxito');
         } catch (error) {
-            console.error("Error al guardar reporte:", error);
-            alert('Error al guardar el reporte');
+            console.error("Error al guardar descripción:", error);
+            alert('Error al guardar la descripción');
         }
     };
     
     const handleShowMore = () => {
-        // Incrementar el número de medicamentos mostrados
-        // Si hay menos de 10 medicamentos restantes, mostrar todos. De lo contrario, mostrar 10 más.
-        const remainingItems = medicines.length - displayCount;
+        // Incrementar el número de vendedores mostrados
+        const remainingItems = vendedores.length - displayCount;
         if (remainingItems <= 10) {
-            setDisplayCount(medicines.length);
+            setDisplayCount(vendedores.length);
         } else {
             setDisplayCount(displayCount + 10);
         }
@@ -158,75 +147,70 @@ const vendedores: React.FC = () => {
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setNewProduct({
-            ...newProduct,
-            [name]: name === 'price' ? parseFloat(value) || 0 : value
+        setNewVendedor({
+            ...newVendedor,
+            [name]: name === 'numeroCelular' ? parseFloat(value) || 0 : value
         });
     };
     
-    const handleAddProduct = async (e: React.FormEvent) => {
+    const handleAddVendedor = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!newProduct.name || !newProduct.price) {
-            alert("Por favor ingrese al menos el nombre y precio del medicamento");
+        if (!newVendedor.nombre || !newVendedor.dpi) {
+            alert("Por favor ingrese al menos el nombre y DPI del vendedor");
             return;
         }
         
-        setAddingProduct(true);
+        setAddingVendedor(true);
         
         try {
-            const response = await fetch('http://localhost:3000/medicine', {
+            const response = await fetch('http://localhost:3000/vendedores', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: newProduct.name,
-                    price: newProduct.price,
-                    type: newProduct.type || "Genérico",
-                    provider: newProduct.provider || "No especificado",
-                    descripcion: `Fecha de vencimiento: ${newProduct.expiryDate}`,
+                    nombre: newVendedor.nombre,
+                    numeroCelular: newVendedor.numeroCelular,
+                    dpi: newVendedor.dpi,
+                    descripcion: ""
                 }),
             });
             
             const result = await response.json();
             
             if (!response.ok) {
-                throw new Error(result.message || 'Error al agregar el medicamento');
+                throw new Error(result.message || 'Error al agregar el vendedor');
             }
             
-            // Añadir el nuevo medicamento a la lista
-            const newMedicine = result.data || result;
-            setMedicines([...medicines, newMedicine]);
+            // Añadir el nuevo vendedor a la lista
+            const nuevoVendedor = result.data || result;
+            setVendedores([...vendedores, nuevoVendedor]);
             
-            setNewProduct({
-                name: "",
-                expiryDate: "",
-                price: 0,
-                type: "",
-                provider: ""
+            setNewVendedor({
+                nombre: "",
+                numeroCelular: 0,
+                dpi: "",
             });
             
-            alert("Medicamento agregado con éxito");
+            alert("Vendedor agregado con éxito");
         } catch (error) {
-            console.error("Error al agregar medicamento:", error);
+            console.error("Error al agregar vendedor:", error);
             if (error instanceof Error) {
-                alert(error.message || "Error al agregar medicamento. Por favor, inténtelo de nuevo.");
+                alert(error.message || "Error al agregar vendedor. Por favor, inténtelo de nuevo.");
             } else {
-                alert("Error al agregar medicamento. Por favor, inténtelo de nuevo.");
+                alert("Error al agregar vendedor. Por favor, inténtelo de nuevo.");
             }
         } finally {
-            setAddingProduct(false);
+            setAddingVendedor(false);
         }
     };
     
-    const handleCancelAddProduct = () => {
-        setNewProduct({
-            name: "",
-            expiryDate: "",
-            price: 0,
-            type: "",
-            provider: ""
+    const handleCancelAddVendedor = () => {
+        setNewVendedor({
+            nombre: "",
+            numeroCelular: 0,
+            dpi: ""
         });
     };
 
@@ -241,7 +225,7 @@ const vendedores: React.FC = () => {
                     <button onClick={handleLogout}>Salir</button>
                     <input 
                         type="text" 
-                        placeholder="Buscar medicamento..." 
+                        placeholder="Buscar por DPI..." 
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -259,25 +243,25 @@ const vendedores: React.FC = () => {
 
             <div className="bodega-content">
                 <div className="columna izquierda">
-                    <h2>LISTA DE VENDEDORES ({medicines.length})</h2>
+                    <h2>LISTA DE VENDEDORES ({vendedores.length})</h2>
                     <div className="lista-medicamentos">
                         {loading ? (
                             <div className="loading">Cargando vendedores...</div>
-                        ) : medicines.length === 0 ? (
+                        ) : vendedores.length === 0 ? (
                             <div className="no-medicines">No se encontraron vendedores</div>
                         ) : (
                             <>
-                                {medicines.slice(0, displayCount).map((medicine) => (
+                                {vendedores.slice(0, displayCount).map((vendedor) => (
                                     <div 
-                                        key={medicine._id} 
-                                        className={`item ${selectedMedicine?._id === medicine._id ? 'seleccionado' : ''}`}
-                                        onClick={() => handleSelectMedicine(medicine)}
+                                        key={vendedor.dpi} 
+                                        className={`item ${selectedVendedor?.dpi === vendedor.dpi ? 'seleccionado' : ''}`}
+                                        onClick={() => handleSelectVendedor(vendedor)}
                                     >
-                                        <div className="medicine-name">{medicine.name}</div>
-                                        <div className="medicine-price">${medicine.price}</div>
+                                        <div className="medicine-name">{vendedor.nombre}</div>
+                                        <div className="medicine-price">DPI: {vendedor.dpi}</div>
                                     </div>
                                 ))}
-                                {medicines.length > displayCount && (
+                                {vendedores.length > displayCount && (
                                     <div className="item ver-mas" onClick={handleShowMore}>ver más...</div>
                                 )}
                             </>
@@ -287,29 +271,28 @@ const vendedores: React.FC = () => {
 
                 <div className="columna centro">
                     <div className="medicine-detail">
-                        <img src={medicinaImg} alt="Medicamento" className="medicine-image" />
-                        {selectedMedicine ? (
+                        <img src={medicinaImg} alt="Vendedor" className="medicine-image" />
+                        {selectedVendedor ? (
                             <div className="medicine-info">
-                                <h3>{selectedMedicine.name}</h3>
-                                <p><strong>Tipo:</strong> {selectedMedicine.type || 'No especificado'}</p>
-                                <p><strong>Precio:</strong> ${selectedMedicine.price}</p>
-                                <p><strong>Proveedor:</strong> {selectedMedicine.provider || 'No especificado'}</p>
+                                <h3>{selectedVendedor.nombre}</h3>
+                                <p><strong>DPI:</strong> {selectedVendedor.dpi}</p>
+                                <p><strong>Teléfono:</strong> {selectedVendedor.numeroCelular}</p>
                                 <textarea
-                                    value={report}
-                                    onChange={(e) => setReport(e.target.value)}
-                                    placeholder="Descripción del medicamento..."
+                                    value={descripcion}
+                                    onChange={(e) => setDescripcion(e.target.value)}
+                                    placeholder="Descripción del vendedor..."
                                     rows={5}
                                 />
                                 <div className="medicine-actions">
                                     <button 
                                         className="save-report"
-                                        onClick={handleSaveReport}
+                                        onClick={handleSaveDescripcion}
                                     >
                                         Guardar Descripción
                                     </button>
                                     <button 
                                         className="mark-delete"
-                                        onClick={() => handleMarkForDeletion(selectedMedicine)}
+                                        onClick={() => handleMarkForDeletion(selectedVendedor)}
                                     >
                                         Marcar para baja
                                     </button>
@@ -325,20 +308,20 @@ const vendedores: React.FC = () => {
 
                 <div className="columna derecha">
                     <div className="delete-section">
-                        <h3>VENDEDORES PARA DAR DE BAJA ({medicinesToDelete.length})</h3>
-                        {medicinesToDelete.length === 0 ? (
+                        <h3>VENDEDORES PARA DAR DE BAJA ({vendedoresToDelete.length})</h3>
+                        {vendedoresToDelete.length === 0 ? (
                             <p>No hay vendedores marcados para eliminar</p>
                         ) : (
                             <>
-                                {medicinesToDelete.map((medicine) => (
-                                    <div key={`delete-${medicine._id}`} className="item-delete">
-                                        {medicine.name} - ${medicine.price}
+                                {vendedoresToDelete.map((vendedor) => (
+                                    <div key={`delete-${vendedor.dpi}`} className="item-delete">
+                                        {vendedor.nombre} - DPI: {vendedor.dpi}
                                     </div>
                                 ))}
                                 <div className="delete-actions">
                                     <button 
                                         className="cancel-button"
-                                        onClick={() => setMedicinesToDelete([])}
+                                        onClick={() => setVendedoresToDelete([])}
                                     >
                                         Cancelar
                                     </button>
@@ -346,7 +329,7 @@ const vendedores: React.FC = () => {
                                         className="delete-button"
                                         onClick={handleDeleteMarked}
                                     >
-                                        Eliminar ({medicinesToDelete.length})
+                                        Eliminar ({vendedoresToDelete.length})
                                     </button>
                                 </div>
                             </>
@@ -357,58 +340,29 @@ const vendedores: React.FC = () => {
                 <div className="columna productos-container">
                     <div className="panel1">
                         <h2 className="panel-title1">AGREGAR NUEVOS VENDEDORES</h2>
-                        <form className="formulario1" onSubmit={handleAddProduct}>
+                        <form className="formulario1" onSubmit={handleAddVendedor}>
                             <label>Nombre del vendedor:</label>
                             <input 
                                 type="text" 
-                                name="name" 
-                                value={newProduct.name}
+                                name="nombre" 
+                                value={newVendedor.nombre}
                                 onChange={handleInputChange}
                                 required
-                            />
-                            <label>Fecha de Nacimiento:</label>
-                            <input 
-                                type="date" 
-                                name="expiryDate" 
-                                value={newProduct.expiryDate}
-                                onChange={handleInputChange}
                             />
                             <label>No. Celular:</label>
                             <input 
                                 type="number" 
-                                name="price" 
-                                value={newProduct.price === 0 ? '' : newProduct.price}
-                                onChange={(e) => {
-                                    const value = e.target.value;
-                                    setNewProduct({
-                                        ...newProduct,
-                                        price: value === '' ? 0 : parseFloat(value) || 0
-                                    });
-                                }}
-                                onKeyDown={(e) => {
-                                    // Permite solo números, punto decimal y teclas de control
-                                    if (!/[0-9.]/.test(e.key) && 
-                                        !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
-                                        e.preventDefault();
-                                    }
-                                }}
-                                step="any"
+                                name="numeroCelular" 
+                                value={newVendedor.numeroCelular === 0 ? '' : newVendedor.numeroCelular}
+                                onChange={handleInputChange}
+                            />
+                            <label>DPI:</label>
+                            <input 
+                                type="text" 
+                                name="dpi" 
+                                value={newVendedor.dpi}
+                                onChange={handleInputChange}
                                 required
-                            />
-                            <label>DPI</label>
-                            <input 
-                                type="text" 
-                                name="type" 
-                                value={newProduct.type}
-                                onChange={handleInputChange}
-                                placeholder="Genérico, Especialidad, etc."
-                            />
-                            <label>Puesto:</label>
-                            <input 
-                                type="text" 
-                                name="provider" 
-                                value={newProduct.provider}
-                                onChange={handleInputChange}
                             />
                             <div className="imagen-vendedor1">
                                 <div className="image-placeholder1"></div>
@@ -418,16 +372,16 @@ const vendedores: React.FC = () => {
                                 <button 
                                     type="button" 
                                     className="cancelar1" 
-                                    onClick={handleCancelAddProduct}
+                                    onClick={handleCancelAddVendedor}
                                 >
                                     Cancelar
                                 </button>
                                 <button 
                                     type="submit" 
                                     className="agregar1"
-                                    disabled={addingProduct}
+                                    disabled={addingVendedor}
                                 >
-                                    {addingProduct ? 'Agregando...' : 'Agregar'}
+                                    {addingVendedor ? 'Agregando...' : 'Agregar'}
                                 </button>
                             </div>
                         </form>
@@ -438,4 +392,4 @@ const vendedores: React.FC = () => {
     );
 };
 
-export default vendedores;
+export default Vendedores;
