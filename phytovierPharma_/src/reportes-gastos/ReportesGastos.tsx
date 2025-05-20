@@ -96,7 +96,7 @@ const ReportesGastos: React.FC = () => {
                     {mostrarReportesVendedor && (
                         <div className="reportes-vendedor">
                             <h3>Reportes del {vendedorSeleccionado}</h3>
-                            <p>El vendedor Juan Perez de 30 medicamentos que se le dieron en una semana vendio 21 medicamentos <br/>
+                            <p>El {vendedorSeleccionado} de 30 medicamentos que se le dieron en una semana vendio 21 medicamentos <br/>
                             Lista de medicamentos vendidos por el vendedor <br/>
                             1. MeniPhib - 5 unidades - Q 100.00 <br/>
                             2. Argipoten - 3 unidades  - Q 105.00<br/>
