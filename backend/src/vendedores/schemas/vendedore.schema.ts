@@ -12,7 +12,7 @@ export class Vendedores {
   numeroCelular: number;
 
   @Prop({ required: true, unique: true })
-  dpi: string;
+  dpi: number;
 
   @Prop()
   descripcion: string;

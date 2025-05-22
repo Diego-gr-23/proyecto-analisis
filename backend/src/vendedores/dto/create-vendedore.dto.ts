@@ -10,8 +10,8 @@ export class CreateVendedoreDto {
   numeroCelular: number;
   
   @IsNotEmpty()
-  @IsString()
-  dpi: string;
+  @IsNumber()
+  dpi: number;
   
   @IsOptional()
   @IsString()
