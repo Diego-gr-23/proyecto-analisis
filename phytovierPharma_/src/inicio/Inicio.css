@@ -1,7 +1,7 @@
 /* Header */
 .header {
     background-color: #4CAF50;
-    padding: 15 px;
+    padding: 20 px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -78,8 +78,8 @@
 .container {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    margin-top: 20px;
+    padding: 10px;
+    margin-top: 10px;
     flex-wrap: wrap; /* Esto permite que los elementos se acomoden en pantallas pequeñas */
 }
 
@@ -87,7 +87,7 @@
     width: 45%;
     text-align: center;
     background-color: #fff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -100,13 +100,13 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-top: 15px;
+    gap: 40px;
+    margin-top: 25px;
 }
 
 .grid div {
     width: 100%;
-    height: 100px;
+    height: 200px;
     background-color: #E8F5E9;
     border: 1px solid #81C784;
     border-radius: 5px;
@@ -152,4 +152,43 @@
         padding: 8px 12px;
         font-size: 12px;
     }
+}
+
+/* .container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+} */
+
+.section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.grid div {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid img {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
 }

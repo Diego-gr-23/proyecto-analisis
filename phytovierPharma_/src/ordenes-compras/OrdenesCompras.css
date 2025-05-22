@@ -1,11 +1,11 @@
-/* Estilos generales */
+/* Estilos generales
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     color: #333;
-    background-color: #f5f5f5;
-}
+    /* background-color: #f5f5f5; */
+/* }  */
 
 /* Header */
 .header {
@@ -19,8 +19,11 @@ body {
 }
 
 .logo-image {
-    height: 50px;
-    object-fit: contain;
+     width:100%;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .header div {
@@ -90,7 +93,7 @@ body {
     padding: 20px;
     height: calc(100vh - 120px);
     box-sizing: border-box;
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
 }
 
 /* Panel de vendedores */
