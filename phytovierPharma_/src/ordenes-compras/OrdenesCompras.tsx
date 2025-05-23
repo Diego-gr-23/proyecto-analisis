@@ -191,6 +191,7 @@ const OrdenesCompras: React.FC = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('rol')
     navigate("/");
   };
 
@@ -422,19 +423,25 @@ const OrdenesCompras: React.FC = () => {
           <img src={pharmaImg} alt="Logo" className="logo-image" />
         </div>
         <div>
-          <span>Administrador</span>
+          <span>ADMINISTRADOR</span>
           <button onClick={handleLogout}>Salir</button>
-          <input type="text" placeholder="Buscar..." />
+          {/* <input type="text" placeholder="Buscar..." /> */}
         </div>
       </div>
 
+        {/* Menú */}
       <div className="menu">
-        <button onClick={() => navigate("/Inicio")}>Inicio</button>
-        <button onClick={() => navigate("/bodega/Bodega")}>Bodega</button>
-        <button onClick={() => navigate("/ordenes-compra")}>Órdenes de Compra</button>
-        <button onClick={() => navigate("/vendedores")}>Vendedores</button>
-        <button onClick={() => navigate("/reportes-gastos")}>Reportes de Gastos</button>
-        <button onClick={() => navigate("/configuracion")}>Configuración</button>
+        <button onClick={() => navigate('/Inicio')}>Inicio</button>
+        <button onClick={() => navigate('/ordenes-compra')}>Órdenes de Compra</button>
+
+        {localStorage.getItem('rol') === 'admin' && (
+          <>
+          <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
+          <button onClick={() => navigate('/vendedores')}>Vendedores</button>
+          <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
+          {/* <button onClick={() => navigate('/configuracion')}>Configuración</button> */}
+          </>
+        )}
       </div>
 
       <div className="ordenes-container">

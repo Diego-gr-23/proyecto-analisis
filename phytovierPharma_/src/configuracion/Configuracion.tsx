@@ -24,6 +24,7 @@ const Configuracion: React.FC = () => {
   }
 
   const handleLogout = () => {
+    localStorage.removeItem('rol')
     navigate('/')
   }
 
@@ -41,14 +42,19 @@ const Configuracion: React.FC = () => {
         </div>
       </div>
 
-      {/* Menú */}
+        {/* Menú */}
       <div className="menu">
         <button onClick={() => navigate('/Inicio')}>Inicio</button>
-        <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
         <button onClick={() => navigate('/ordenes-compra')}>Órdenes de Compra</button>
-        <button onClick={() => navigate('/vendedores')}>Vendedores</button>
-        <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
-        <button onClick={() => navigate('/configuracion')}>Configuración</button>
+
+        {localStorage.getItem('rol') === 'admin' && (
+          <>
+          <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
+          <button onClick={() => navigate('/vendedores')}>Vendedores</button>
+          <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
+          {/* <button onClick={() => navigate('/configuracion')}>Configuración</button> */}
+          </>
+        )}
       </div>
 
       {/* Contenido de configuración */}

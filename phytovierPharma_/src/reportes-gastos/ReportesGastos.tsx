@@ -10,6 +10,7 @@ const ReportesGastos: React.FC = () => {
     const [vendedorSeleccionado, setVendedorSeleccionado] = useState("Vendedor 1");
 
     const handleLogout = () => {
+        localStorage.removeItem('rol')
         navigate('/');
     };
 
@@ -33,20 +34,25 @@ const ReportesGastos: React.FC = () => {
                     <img src={pharmaImg} alt="Logo" className="logo-image" />
                 </div>
                 <div>
-                    <span>Administrador</span>
+                    <span>ADMINISTRADOR</span>
                     <button onClick={handleLogout}>Salir</button>
-                    <input type="text" placeholder="Search" />
+                    {/* <input type="text" placeholder="Search" /> */}
                 </div>
             </div>
 
-            {/* Menú */}
+              {/* Menú */}
             <div className="menu">
                 <button onClick={() => navigate('/Inicio')}>Inicio</button>
-                <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
                 <button onClick={() => navigate('/ordenes-compra')}>Órdenes de Compra</button>
-                <button onClick={() => navigate('/vendedores')}>Vendedores</button>
-                <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
-                <button onClick={() => navigate('/configuracion')}>Configuración</button>
+
+                {localStorage.getItem('rol') === 'admin' && (
+                    <>
+                    <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
+                    <button onClick={() => navigate('/vendedores')}>Vendedores</button>
+                    <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
+                    {/* <button onClick={() => navigate('/configuracion')}>Configuración</button> */}
+                    </>
+                )}
             </div>
 
             {/* Contenido de Reportes de Gastos */}
@@ -95,17 +101,37 @@ const ReportesGastos: React.FC = () => {
 
                     {mostrarReportesVendedor && (
                         <div className="reportes-vendedor">
-                            <h3>Reportes del {vendedorSeleccionado}</h3>
-                            <p>El {vendedorSeleccionado} de 30 medicamentos que se le dieron en una semana vendio 21 medicamentos <br/>
-                            Lista de medicamentos vendidos por el vendedor <br/>
-                            1. MeniPhib - 5 unidades - Q 100.00 <br/>
-                            2. Argipoten - 3 unidades  - Q 105.00<br/>
-                            3. Ajo Perejil - 2 unidades - Q 50.00<br/>
-                            4. Metabolex fibra - 5 unidades - Q 100<br/>
-                            5. Cartilageno - 3 unidades - Q 25.00<br/>
-                            Siendo un total de 21 medicamentos vendidos y un total de Q 1490. 00</p>
-                            Le hiceron falta 9 medicamentos para llegar a la meta de 30 medicamentos vendidos
-                            {/* Puedes insertar aquí una tabla o componente de reportes reales */}
+                            {vendedorSeleccionado === "Vendedor 1" &&(
+                                <div>
+                                    <h3>Reportes del vendedor 1</h3>
+                                    <p>El vendedor 1 de 30 medicamentos que se le dieron en una semana vendio 21 medicamentos <br/>
+                                    Lista de medicamentos vendidos por el vendedor <br/>
+                                    1. MeniPhib - 5 unidades - Q 100.00 <br/>
+                                    2. Argipoten - 3 unidades  - Q 105.00<br/>
+                                    3. Ajo Perejil - 2 unidades - Q 50.00<br/>
+                                    4. Metabolex fibra - 5 unidades - Q 65<br/>
+                                    5. Cartilageno - 3 unidades - Q 100.00<br/>
+                                    Siendo un total de 21 medicamentos vendidos y un total de Q 1540.00
+                                    Le hiceron falta 9 medicamentos para llegar a la meta de 30 medicamentos vendidos
+                                    </p>
+                                </div>
+                            )}
+
+                            {vendedorSeleccionado === "Vendedor 2" &&(
+                                <div>
+                                    <h3>Reportes del vendedor 2</h3>
+                                    <p>El vendedor 2 de 30 medicamentos que se le dieron en una semana vendio 15 medicamentos <br/>
+                                    Lista de medicamentos vendidos por el vendedor <br/>
+                                    1. Enzimas Digestivas - 5 unidades - Q 35.00 <br/>
+                                    2. Argipoten - 3 unidades  - Q 105.00<br/>
+                                    3. Ajo Perejil - 2 unidades - Q 50.00<br/>
+                                    4. Sumet Forte - 5 unidades - Q 25<br/>
+                                    Siendo un total de 15 medicamentos vendidos y un total de Q 715.00
+                                    Le hiceron falta 15 medicamentos para llegar a la meta de 30 medicamentos vendidos
+                                    </p>
+
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

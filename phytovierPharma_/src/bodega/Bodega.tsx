@@ -79,6 +79,7 @@ const Bodega: React.FC = () => {
     }, [searchTerm]);
 
     const handleLogout = () => {
+        localStorage.removeItem('rol')
         navigate('/');
     };
 
@@ -245,24 +246,30 @@ const Bodega: React.FC = () => {
                     <img src={pharmaImg} alt="Logo" className="logo-image" />
                 </div>
                 <div className="header-actions">
-                    <span>Administrador</span>
+                    <span>ADMINISTRADOR</span>
                     <button onClick={handleLogout}>Salir</button>
-                    <input 
+                    {/* <input 
                         type="text" 
                         placeholder="Buscar medicamento..." 
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    /> */}
                 </div>
             </div>
 
+              {/* Menú */}
             <div className="menu">
                 <button onClick={() => navigate('/Inicio')}>Inicio</button>
-                <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
                 <button onClick={() => navigate('/ordenes-compra')}>Órdenes de Compra</button>
-                <button onClick={() => navigate('/vendedores')}>Vendedores</button>
-                <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
-                <button onClick={() => navigate('/configuracion')}>Configuración</button>
+
+                {localStorage.getItem('rol') === 'admin' && (
+                    <>
+                    <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
+                    <button onClick={() => navigate('/vendedores')}>Vendedores</button>
+                    <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
+                    {/* <button onClick={() => navigate('/configuracion')}>Configuración</button> */}
+                    </>
+                )}
             </div>
 
             <div className="bodega-content">

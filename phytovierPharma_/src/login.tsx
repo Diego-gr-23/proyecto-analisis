@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import './login.css'
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
-    // Agrega la clase 'login' al body solo mientras este componente esté activo
+    const rol = localStorage.getItem('rol')
+
+    // Redirigir a /inicio solo si hay sesión activa y no venimos de un logout
+    if (rol && location.pathname === '/') {
+      navigate('/inicio')
+    }
+
     document.body.classList.add('login')
     return () => {
       document.body.classList.remove('login')
     }
-  }, [])
+  }, [navigate, location])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Simulación de acceso basado en usuario
     if (username === 'admin' && password === 'admin123') {
-      navigate('/inicio') // Admin va a /inicio
+      localStorage.setItem('rol', 'admin')
+      navigate('/inicio')
     } else if (username === 'vendedor' && password === 'venta123') {
-      navigate('/ventas') // Vendedor va a /ventas (puede ser cualquier ruta que definas)
+      localStorage.setItem('rol', 'vendedor')
+      navigate('/inicio')
     } else {
       alert('Usuario o contraseña incorrectos.')
     }

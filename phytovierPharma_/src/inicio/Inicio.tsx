@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // Aquí puedes agregar lógica de cierre de sesión si es necesario (por ejemplo, eliminar tokens de autenticación)
+    localStorage.removeItem('rol')  // Elimina el rol del localStorage
     navigate('/')  // Redirige al login
   }
 
@@ -33,20 +33,25 @@ const Dashboard: React.FC = () => {
           <img src={pharmaImg} alt="Logo" className="logo-image" />
         </div>
         <div>
-          <span>Administrador</span>
+          <span>ADMINISTRADOR</span>
           <button onClick={handleLogout}>Salir</button>
-          <input type="text" placeholder="Search" />
+          {/* <input type="text" placeholder="Search" /> */}
         </div>
       </div>
 
       {/* Menú */}
       <div className="menu">
         <button onClick={() => navigate('/Inicio')}>Inicio</button>
-        <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
         <button onClick={() => navigate('/ordenes-compra')}>Órdenes de Compra</button>
-        <button onClick={() => navigate('/vendedores')}>Vendedores</button>
-        <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
-        <button onClick={() => navigate('/configuracion')}>Configuración</button>
+
+        {localStorage.getItem('rol') === 'admin' && (
+          <>
+          <button onClick={() => navigate('/bodega/Bodega')}>Bodega</button>
+          <button onClick={() => navigate('/vendedores')}>Vendedores</button>
+          <button onClick={() => navigate('/reportes-gastos')}>Reportes de Gastos</button>
+          {/* <button onClick={() => navigate('/configuracion')}>Configuración</button> */}
+          </>
+        )}
       </div>
 
       {/* Contenido */}
