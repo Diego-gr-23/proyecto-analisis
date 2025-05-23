@@ -289,7 +289,7 @@ const Bodega: React.FC = () => {
                                         onClick={() => handleSelectMedicine(medicine)}
                                     >
                                         <div className="medicine-name">{medicine.name}</div>
-                                        <div className="medicine-price">${medicine.price}</div>
+                                        <div className="medicine-price">Q{medicine.price}</div>
                                         <div className="medicine-cantidad">Cantidad: {medicine.stock ?? 0}</div>
                                     </div>
                                 ))}
@@ -308,7 +308,7 @@ const Bodega: React.FC = () => {
                             <div className="medicine-info">
                                 <h3>{selectedMedicine.name}</h3>
                                 <p><strong>Tipo:</strong> {selectedMedicine.type || 'No especificado'}</p>
-                                <p><strong>Precio:</strong> ${selectedMedicine.price}</p>
+                                <p><strong>Precio:</strong> Q{selectedMedicine.price}</p>
                                 <p><strong>Proveedor:</strong> {selectedMedicine.provider || 'No especificado'}</p>
                                 <p><strong>Cantidad:</strong> {selectedMedicine?.stock ?? 0}</p>
                                 <textarea
@@ -349,7 +349,7 @@ const Bodega: React.FC = () => {
                             <>
                                 {medicinesToDelete.map((medicine) => (
                                     <div key={`delete-${medicine._id}`} className="item-delete">
-                                        {medicine.name} - ${medicine.price}
+                                        {medicine.name} - Q{medicine.price}
                                     </div>
                                 ))}
                                 <div className="delete-actions">

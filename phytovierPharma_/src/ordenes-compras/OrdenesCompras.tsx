@@ -462,7 +462,7 @@ const OrdenesCompras: React.FC = () => {
                   <div className="vendedor-nombre">{vendedorData.vendedor.nombre}</div>
                   <div className="vendedor-stats">
                     <span className="total-ordenes">{vendedorData.totalOrdenes} órdenes</span>
-                    <span className="monto-total">${vendedorData.montoTotal.toFixed(2)}</span>
+                    <span className="monto-total">Q{vendedorData.montoTotal.toFixed(2)}</span>
                     {vendedorData.ordenesUrgentes && vendedorData.ordenesUrgentes > 0 && (
                       <span className="urgentes-count">{vendedorData.ordenesUrgentes} urgentes</span>
                     )}
@@ -499,7 +499,7 @@ const OrdenesCompras: React.FC = () => {
                 >
                   {orden.estado.toUpperCase()}
                 </div>
-                <div className="orden-total">${orden.total.toFixed(2)}</div>
+                <div className="orden-total">Q{orden.total.toFixed(2)}</div>
                 {orden.urgente && <div className="urgente-badge">URGENTE</div>}
               </div>
             </button>
@@ -548,7 +548,7 @@ const OrdenesCompras: React.FC = () => {
                 </div>
                 <div className="info-item">
                   <label>Total:</label>
-                  <span>${ordenSeleccionada.total.toFixed(2)}</span>
+                  <span>Q{ordenSeleccionada.total.toFixed(2)}</span>
                 </div>
                 {ordenSeleccionada.observaciones && (
                   <div className="info-item full-width">
@@ -565,9 +565,9 @@ const OrdenesCompras: React.FC = () => {
                     <div key={`${medicina.medicineId}-${index}`} className="producto-item">
                       <div className="producto-nombre">{medicina.nombreMedicina}</div>
                       <div className="producto-cantidad">Cantidad: {medicina.cantidad}</div>
-                      <div className="producto-precio">Precio unitario: ${medicina.precioUnitario.toFixed(2)}</div>
+                      <div className="producto-precio">Precio unitario: Q{medicina.precioUnitario.toFixed(2)}</div>
                       <div className="producto-subtotal">
-                        Subtotal: ${medicina.subtotal.toFixed(2)}
+                        Subtotal: Q{medicina.subtotal.toFixed(2)}
                       </div>
                     </div>
                   ))}
@@ -681,7 +681,7 @@ const OrdenesCompras: React.FC = () => {
                               <div className="medicina-info">
                                 <span className="medicina-nombre">{medicina.nombre}</span>
                                 <span className="medicina-precio">
-                                  ${typeof medicina.precio === "number" ? medicina.precio.toFixed(2) : "0.00"}
+                                  Q{typeof medicina.precio === "number" ? medicina.precio.toFixed(2) : "0.00"}
                                 </span>
                                 <span className="medicina-proveedor">Proveedor: {medicina.proveedor}</span>
                                 <span className="medicina-stock">Stock: {medicina.cantidad}</span>
@@ -697,7 +697,7 @@ const OrdenesCompras: React.FC = () => {
                       <div className="medicina-selected">
                         <div className="selected-info">
                           <span><strong>{newMedicina.nombreMedicina}</strong></span>
-                          <span>Precio: ${newMedicina.precioUnitario.toFixed(2)}</span>
+                          <span>Precio: Q{newMedicina.precioUnitario.toFixed(2)}</span>
                         </div>
                         <input
                           type="number"
@@ -721,8 +721,8 @@ const OrdenesCompras: React.FC = () => {
                         <div key={index} className="medicina-item">
                           <span>{medicina.nombreMedicina}</span>
                           <span>Cantidad: {medicina.cantidad}</span>
-                          <span>Precio: ${medicina.precioUnitario.toFixed(2)}</span>
-                          <span>Subtotal: ${(medicina.cantidad * medicina.precioUnitario).toFixed(2)}</span>
+                          <span>Precio: Q{medicina.precioUnitario.toFixed(2)}</span>
+                          <span>Subtotal: Q{(medicina.cantidad * medicina.precioUnitario).toFixed(2)}</span>
                           <button 
                             type="button" 
                             onClick={() => handleRemoveMedicina(index)}
@@ -733,7 +733,7 @@ const OrdenesCompras: React.FC = () => {
                         </div>
                       ))}
                       <div className="total-orden">
-                        <strong>Total de la orden: ${calculateOrderTotal().toFixed(2)}</strong>
+                        <strong>Total de la orden: Q{calculateOrderTotal().toFixed(2)}</strong>
                       </div>
                     </div>
                   )}
