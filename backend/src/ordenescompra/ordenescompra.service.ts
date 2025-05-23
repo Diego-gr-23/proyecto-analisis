@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateOrdenescompraDto } from './dto/create-ordenescompra.dto';
 import { UpdateOrdenescompraDto } from './dto/update-ordenescompra.dto';
 import { Ordenescompra, OrdenescompraDocument } from './schemas/ordenescompra.schema';
@@ -13,6 +13,9 @@ export class OrdenescompraService {
   ) {}
 
   async create(createOrdenescompraDto: CreateOrdenescompraDto): Promise<Ordenescompra> {
+    if (createOrdenescompraDto.vendedorId && typeof createOrdenescompraDto.vendedorId === 'string') {
+      createOrdenescompraDto.vendedorId = new Types.ObjectId(createOrdenescompraDto.vendedorId);
+    }
     const nuevaOrden = new this.ordenescompraModel(createOrdenescompraDto);
     return nuevaOrden.save();
   }
@@ -53,7 +56,11 @@ export class OrdenescompraService {
         await this.createSampleData();
       }
 
-      const result = await this.ordenescompraModel.aggregate([
+      // Obtener todos los vendedores primero
+      const vendedores = await this.ordenescompraModel.db.collection('Vendedores').find().toArray();
+
+      // Obtener las órdenes agrupadas por vendedor
+      const ordenesPorVendedor = await this.ordenescompraModel.aggregate([
         {
           $lookup: {
             from: 'Vendedores',
@@ -89,17 +96,28 @@ export class OrdenescompraService {
               $sum: { $cond: ['$urgente', 1, 0] } 
             }
           }
-        },
-        {
-          $sort: { 'vendedor.nombre': 1 }
         }
       ]);
 
-      if (!result || result.length === 0) {
-        throw new Error('No se encontraron órdenes agrupadas por vendedor');
-      }
+      // Combinar todos los vendedores con sus órdenes (si las tienen)
+      const resultado = vendedores.map(vendedor => {
+        const vendedorConOrdenes = ordenesPorVendedor.find(o => o._id.toString() === vendedor._id.toString());
+        
+        return vendedorConOrdenes || {
+          _id: vendedor._id,
+          vendedor: {
+            _id: vendedor._id,
+            nombre: vendedor.nombre,
+            email: vendedor.email
+          },
+          ordenes: [],
+          totalOrdenes: 0,
+          montoTotal: 0,
+          ordenesUrgentes: 0
+        };
+      });
 
-      return result;
+      return resultado.sort((a, b) => a.vendedor.nombre.localeCompare(b.vendedor.nombre));
     } catch (error) {
       console.error('Error en getOrdenesPorVendedor:', error);
       throw error;
@@ -129,13 +147,11 @@ export class OrdenescompraService {
   async createSampleData(): Promise<void> {
     const count = await this.ordenescompraModel.countDocuments();
     if (count === 0) {
-      // 1. Obtener datos necesarios
       const [vendedores, medicines] = await Promise.all([
         this.ordenescompraModel.db.collection('Vendedores').find().limit(2).toArray(),
         this.ordenescompraModel.db.collection('Medicine').find().limit(6).toArray()
       ]);
 
-      // 2. Validaciones mejoradas
       if (vendedores.length < 2) {
         throw new Error('Se necesitan al menos 2 vendedores en la base de datos');
       }
@@ -145,7 +161,6 @@ export class OrdenescompraService {
         throw new Error(`Solo ${medicinasValidas.length}/6 medicinas tienen nombre válido. Verifica la colección Medicine.`);
       }
 
-      // 3. Crear datos de muestra con nombres consistentes
       const sampleData = [
         {
           numeroOrden: 'ORD-001',

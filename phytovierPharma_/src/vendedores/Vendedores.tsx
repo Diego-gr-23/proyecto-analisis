@@ -172,7 +172,7 @@ const Vendedores: React.FC = () => {
                 body: JSON.stringify({
                     nombre: newVendedor.nombre,
                     numeroCelular: newVendedor.numeroCelular,
-                    dpi: newVendedor.dpi,
+                    dpi: Number(newVendedor.dpi),
                     descripcion: ""
                 }),
             });
