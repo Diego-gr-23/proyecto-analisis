@@ -31,4 +31,9 @@ export class CreateMedicineDto {
     @IsOptional()
     @IsString()
     laboratory?: string;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    stock?: number;
 }

@@ -11,6 +11,7 @@ interface Medicine {
     price: number;
     provider?: string;
     descripcion?: string;
+    stock?: number; // <-- usa stock en todo
 }
 
 interface NewProduct {
@@ -19,6 +20,7 @@ interface NewProduct {
     price: number;
     type?: string;
     provider?: string;
+    stock: number; // <-- usa stock en todo
 }
 
 const Bodega: React.FC = () => {
@@ -37,7 +39,8 @@ const Bodega: React.FC = () => {
         expiryDate: "",
         price: 0,
         type: "",
-        provider: ""
+        provider: "",
+        stock: 0 // <-- usa stock
     });
     const [addingProduct, setAddingProduct] = useState(false);
 
@@ -160,20 +163,22 @@ const Bodega: React.FC = () => {
         const { name, value } = e.target;
         setNewProduct({
             ...newProduct,
-            [name]: name === 'price' ? parseFloat(value) || 0 : value
+            [name]: name === 'price' || name === 'stock'
+                ? parseFloat(value) || 0
+                : value
         });
     };
     
     const handleAddProduct = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!newProduct.name || !newProduct.price) {
             alert("Por favor ingrese al menos el nombre y precio del medicamento");
             return;
         }
-        
+
         setAddingProduct(true);
-        
+
         try {
             const response = await fetch('http://localhost:3000/medicine', {
                 method: 'POST',
@@ -186,27 +191,29 @@ const Bodega: React.FC = () => {
                     type: newProduct.type || "Genérico",
                     provider: newProduct.provider || "No especificado",
                     descripcion: `Fecha de vencimiento: ${newProduct.expiryDate}`,
+                    stock: newProduct.stock // <-- usa stock
                 }),
             });
-            
+
             const result = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(result.message || 'Error al agregar el medicamento');
             }
-            
+
             // Añadir el nuevo medicamento a la lista
             const newMedicine = result.data || result;
             setMedicines([...medicines, newMedicine]);
-            
+
             setNewProduct({
                 name: "",
                 expiryDate: "",
                 price: 0,
                 type: "",
-                provider: ""
+                provider: "",
+                stock: 0 // <-- Limpia cantidad
             });
-            
+
             alert("Medicamento agregado con éxito");
         } catch (error) {
             console.error("Error al agregar medicamento:", error);
@@ -226,7 +233,8 @@ const Bodega: React.FC = () => {
             expiryDate: "",
             price: 0,
             type: "",
-            provider: ""
+            provider: "",
+            stock: 0
         });
     };
 
@@ -275,6 +283,7 @@ const Bodega: React.FC = () => {
                                     >
                                         <div className="medicine-name">{medicine.name}</div>
                                         <div className="medicine-price">${medicine.price}</div>
+                                        <div className="medicine-cantidad">Cantidad: {medicine.stock ?? 0}</div>
                                     </div>
                                 ))}
                                 {medicines.length > displayCount && (
@@ -294,6 +303,7 @@ const Bodega: React.FC = () => {
                                 <p><strong>Tipo:</strong> {selectedMedicine.type || 'No especificado'}</p>
                                 <p><strong>Precio:</strong> ${selectedMedicine.price}</p>
                                 <p><strong>Proveedor:</strong> {selectedMedicine.provider || 'No especificado'}</p>
+                                <p><strong>Cantidad:</strong> {selectedMedicine?.stock ?? 0}</p>
                                 <textarea
                                     value={report}
                                     onChange={(e) => setReport(e.target.value)}
@@ -409,6 +419,15 @@ const Bodega: React.FC = () => {
                                 name="provider" 
                                 value={newProduct.provider}
                                 onChange={handleInputChange}
+                            />
+                            <label>Cantidad:</label>
+                            <input 
+                                type="number" 
+                                name="stock" // <-- usa "stock"
+                                value={newProduct.stock === 0 ? '' : newProduct.stock}
+                                onChange={handleInputChange}
+                                min="0"
+                                required
                             />
                             <div className="imagen-vendedor1">
                                 <div className="image-placeholder1"></div>

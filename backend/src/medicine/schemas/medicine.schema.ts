@@ -26,6 +26,9 @@ export class Medicine extends Document {
 
   @Prop()
   laboratory: string;
+
+  @Prop({default: 0})
+  stock: number;
 }
 
 export const MedicineSchema = SchemaFactory.createForClass(Medicine);
