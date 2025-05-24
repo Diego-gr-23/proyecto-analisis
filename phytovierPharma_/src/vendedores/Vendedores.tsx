@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./vendedores.css";
 import { useNavigate } from "react-router-dom";
-import medicinaImg from '../assets/medicina.jpeg';
+import vendedor from '../assets/usuario_ejm.jpg';
 import pharmaImg from "../assets/pharma.png";
 
 interface Vendedor {
@@ -278,7 +278,7 @@ const Vendedores: React.FC = () => {
 
                 <div className="columna centro">
                     <div className="medicine-detail">
-                        <img src={medicinaImg} alt="Vendedor" className="medicine-image" />
+                        <img src={vendedor} alt="Vendedor" className="vendedor-image" />
                         {selectedVendedor ? (
                             <div className="medicine-info">
                                 <h3>{selectedVendedor.nombre}</h3>
